@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>i hate assesments send help plz</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #111111;
+    --code-bg: #f4f4f4;
+    --code-border: #ccc;
+    --button-bg: #2563eb;
+    --button-text: #ffffff;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1a1a;
+      --text: #f0f0f0;
+      --code-bg: #2a2a2a;
+      --code-border: #444;
+      --button-bg: #3b82f6;
+      --button-text: #ffffff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    padding-top: calc(20px + env(safe-area-inset-top, 0px));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.8em;
+  }
+  .copy-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0 10px 0;
+    height: 160px;
+  }
+  .red-circle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 8px solid red;
+    border-radius: 50%;
+  }
+  .arrow {
+    position: absolute;
+    font-size: 40px;
+    color: red;
+    font-weight: bold;
+  }
+  .arrow-top { top: -10px; }
+  .arrow-bottom { bottom: -10px; transform: rotate(180deg); }
+  .arrow-left { left: 0; transform: rotate(90deg); }
+  .arrow-right { right: 0; transform: rotate(-90deg); }
+  .copy-btn {
+    position: relative;
+    z-index: 2;
+    background: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    padding: 16px 28px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .paste-note {
+    text-align: center;
+    font-size: 0.9em;
+    margin-bottom: 40px;
+  }
+  h2 {
+    margin-top: 40px;
+    border-bottom: 1px solid var(--code-border);
+    padding-bottom: 6px;
+  }
+  .sample-text {
+    margin: 8px 0;
+  }
+  .mini-code, .full-code {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 12px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+    white-space: pre;
+    min-height: 1.2em;
+  }
+  .full-code {
+    min-height: 200px;
+    margin-top: 10px;
+  }
+  hr {
+    border: none;
+    border-top: 2px solid var(--code-border);
+    margin: 50px 0 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<h1>Big button to copy code</h1>
+<div class="copy-wrap">
+  <div class="red-circle"></div>
+  <span class="arrow arrow-top">&#8595;</span>
+  <span class="arrow arrow-bottom">&#8595;</span>
+  <button class="copy-btn" id="copyBtn" onclick="copyFullCode()">Copy Code</button>
+  <img src="meimei.webp" alt="meimei" style="height: 250px; position: absolute; left: calc(50% + 200px); top: 50%; transform: translateY(-50%);">
+</div>
+<p class="paste-note">Paste this into your compiler at onlinegdb.com</p>
+
+
+<p class="sample-text">Guide to help you guys do the assesment, full code at the bottom... or you can click the big button in the red circle to copy the code... the rest is just explanations incase you guys dont know what the code does. Oh yea also dont copy it one to one the code... unless you want to fail and get 100% similarity</p>
+
+<!-- 13 segment sections -->
+<h2>1. Header Comments</h2>
+<p class="sample-text">Rules, Registration number, name... just put them in comments at the top and change it to be yours... unless you really are ryan gosling (adrian miel you are not ryan gosling)</p>
+<div class="mini-code">/*
+ * Name: Ryan Gosling
+ * ID: 67-67-6767
+ *   Rules:
+ *   R1 - numbered menu with prices in AED
+ *   R2 - takes several items and quantities until cashier finishes
+ *   R3 - subtotal, 5% VAT, total shown with 2 decimal places
+ *   R4 - 10% off if subtotal is AED 60 or more, before VAT
+ *   R5 - rejects invalid menu choices and quantities outside 1 to 10
+ */
+</div>
+
+<h2>2. Header Files</h2>
+<p class="sample-text">Includes header files for scanf/print/input output stuff. We kinda need that, idk if you guys know we need to print stuff (woah)</p>
+<div class="mini-code">#include &lt;stdio.h&gt;</div>
+
+<h2>3. define and constants</h2>
+<p class="sample-text">These lines create "nicknames" for numbers used later in the code, so instead of typing 0.05 everywhere, the code just says VAT_RATE. Easier to read, and if the value needs to change, you only change it once up here instead of hunting through the whole file.</p>
+<div class="mini-code">#define VAT_RATE            0.05f
+#define DISCOUNT_RATE       0.10f
+#define DISCOUNT_THRESHOLD  60.0f
+#define MIN_QTY             1
+#define MAX_QTY             10
+#define LINE_LENGTH         32
+</div>
+
+<h2>4. Function Prototypes</h2>
+<p class="sample-text">The compiler reads your code from top to bottom. If main calls a function that's written further down in the file, the compiler won't know it exists yet and will throw an error. These lines just tell the compiler this function exists so it doesn't error.</p>
+<div class="mini-code">void print_line(void);
+void print_money(float amount);
+void show_menu(void);
+</div>
+
+<h2>5. Other Functions (print_line)</h2>
+<p class="sample-text">We make another function that prints "=" 32 times (or however many you have set for the LINE_LENGTH defined earlier) so we just type in print_line(); later whenever we need that</p>
+<div class="mini-code">void print_line(void)
+{
+    int i;
+    for (i = 0; i < LINE_LENGTH; i++) {
+        printf("=");
+    }
+    printf("\n");
+}</div>
+
+<h2>6. Other Functions (print_money)</h2>
+<p class="sample-text">Prices are floats, which can print with weird amounts of decimals if you let them. This function always prints a price the same way, with "AED" in front and exactly 2 decimal places, so the receipt looks consistent no matter what number goes in.</p>
+<div class="mini-code">void print_money(float amount)
+{
+    printf("AED %.2f\n", amount);
+}</div>
+
+<h2>7. Other Functions (show_menu)</h2>
+<p class="sample-text">This just prints the menu so the customer can see their options and numbers to pick from. The items and prices below are only a sample, swap them for whatever actually makes sense for your restaurant or kitchen, the numbers just need to match up with the choices in the switch statement later.</p>
+<div class="mini-code">void show_menu(void)
+{
+    printf("\n");
+    print_line();
+    printf("    QuickBite Kitchen Menu\n");
+    print_line();
+
+    printf("  1. Chicken Shawarma    ");
+    print_money(18.00f);
+
+    printf("  0. Finish order\n");
+    print_line();
+}</div>
+
+<h2>8. Main Function - Variables</h2>
+<p class="sample-text">Think of these as empty boxes the program fills in as it runs. subtotal, discount, vat, and total hold money amounts, choice and qty hold whatever numbers the customer types in, and items_ordered just counts how many items got added. They all start at 0 because nothing has happened yet.</p>
+<div class="mini-code">float subtotal = 0.0f;
+float discount = 0.0f;
+float discounted = 0.0f;
+float vat = 0.0f;
+float total = 0.0f;
+float price = 0.0f;
+
+int choice;
+int qty;
+int items_ordered = 0;</div>
+
+<h2>9. Taking the Order (do/while and switch)</h2>
+<p class="sample-text">do/while means the code inside runs at least once, then keeps repeating until the condition at the bottom is false, here that means it keeps showing the menu until the customer types 0. The switch is just a shortcut for "if choice is 1, do this, if choice is 2, do that", matching whatever number they typed to the right price.</p>
+<div class="mini-code">do {
+    show_menu();
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 0:
+            break;
+        case 1:
+            price = 18.00f;
+            break;
+        default:
+            printf("Invalid choice.\n");
+            break;
+    }
+} while (choice != 0);</div>
+
+<h2>10. Checking the Quantity</h2>
+<p class="sample-text">This makes sure the quantity typed in actually makes sense, between 1 and 10. If someone types 0, -5, or 500, it shows an error and does not add anything to the total, instead of silently messing up the order.</p>
+<div class="mini-code">if (qty < MIN_QTY || qty > MAX_QTY) {
+    printf("Invalid quantity. Please enter %d to %d.\n",
+           MIN_QTY, MAX_QTY);
+}</div>
+
+<h2>11. No Items Ordered</h2>
+<p class="sample-text">If the customer hits 0 right away without ever picking an item, there is nothing to put on a receipt. This just catches that case, says so, and ends the program early instead of printing a receipt full of zeros.</p>
+<div class="mini-code">if (items_ordered == 0) {
+    printf("\nNo items ordered. Goodbye!\n");
+    return 0;
+}</div>
+
+<h2>12. Calculating Discount, VAT, and Total</h2>
+<p class="sample-text">First it checks if the subtotal is big enough to earn the 10 percent discount. Then it takes the discount off, adds 5 percent VAT on top of that smaller amount, and whatever is left after that is the final total the customer pays.</p>
+<div class="mini-code">if (subtotal >= DISCOUNT_THRESHOLD) {
+    discount = subtotal * DISCOUNT_RATE;
+}
+
+discounted = subtotal - discount;
+vat = discounted * VAT_RATE;
+total = discounted + vat;</div>
+
+<h2>13. Other stuff not on here</h2>
+<p class="sample-text">Some stuff not covered in our lesson, you can put em but you will need to explain them (otherwise they'll think you used AI for the coding) like %-20s isntead of spamming spaces inside the strings(printf) for alligning them left or %6.2f to print a float in 6 columns with 2 decimals... but again not taught in our lessons sooo your choice to put them... but you will need to explain themi if you put them.
+
+Exmaples:
+</p>
+<div class="mini-code">#define LABEL_W 22
+
+printf("%-*s", LABEL_W, "Subtotal:");
+print_money(subtotal);
+
+printf("%-*s", LABEL_W, "Discount (10 percent):");
+print_money(discount);
+
+printf("%-*s", LABEL_W, "TOTAL:");
+print_money(total);</div>
+
+<hr>
+
+<h2>Full Code</h2>
+<p class="sample-text">Big copy button at the top if you need... and please change it... unless you REALLLLY wanna fail</p>
+<div class="full-code" id="fullCode">/*
+ * Name: Ryan Gosling
+ * ID: 67-67-6767
+ *   Rules:
+ *   R1 - numbered menu with prices in AED
+ *   R2 - takes several items and quantities until cashier finishes
+ *   R3 - subtotal, 5% VAT, total shown with 2 decimal places
+ *   R4 - 10% off if subtotal is AED 60 or more, before VAT
+ *   R5 - rejects invalid menu choices and quantities outside 1 to 10
+ */
+
+#include <stdio.h>
+
+/* ---------- Constants ---------- */
+#define VAT_RATE            0.05f
+#define DISCOUNT_RATE       0.10f
+#define DISCOUNT_THRESHOLD  60.0f
+#define MIN_QTY             1
+#define MAX_QTY             10
+#define LINE_LENGTH         32
+
+/* ---------- Function prototypes ---------- */
+void print_line(void);
+void print_money(float amount);
+void show_menu(void);
+
+/* ---------- Function: print_line ---------- */
+void print_line(void)
+{
+    int i;
+
+    for (i = 0; i < LINE_LENGTH; i++) {
+        printf("=");
+    }
+    printf("\n");
+}
+
+/* ---------- Function: print_money ----------
+ * Prints a float amount using plain %.2f only.
+ */
+void print_money(float amount)
+{
+    printf("AED %.2f\n", amount);
+}
+
+/* ---------- Function: show_menu ---------- */
+void show_menu(void)
+{
+    printf("\n");
+    print_line();
+    printf("    QuickBite Kitchen Menu\n");
+    print_line();
+
+    printf("  1. Chicken Shawarma    ");
+    print_money(18.00f);
+
+    printf("  2. Beef Burger         ");
+    print_money(22.00f);
+
+    printf("  3. Falafel Wrap        ");
+    print_money(12.00f);
+
+    printf("  4. Loaded Fries        ");
+    print_money(14.00f);
+
+    printf("  5. Karak Tea           ");
+    print_money(5.00f);
+
+    printf("  6. Soft Drink          ");
+    print_money(4.00f);
+
+    printf("  0. Finish order\n");
+    print_line();
+}
+
+int main(void)
+{
+    float subtotal = 0.0f;
+    float discount = 0.0f;
+    float discounted = 0.0f;
+    float vat = 0.0f;
+    float total = 0.0f;
+    float price = 0.0f;
+
+    int choice;
+    int qty;
+    int items_ordered = 0;
+
+    printf("Welcome to QuickBite Till\n");
+
+    do {
+        show_menu();
+        printf("Enter item number (0 to finish): ");
+        scanf("%d", &choice);
+
+        price = 0.0f;
+
+        switch (choice) {
+            case 0:
+                break;
+            case 1:
+                price = 18.00f;
+                break;
+            case 2:
+                price = 22.00f;
+                break;
+            case 3:
+                price = 12.00f;
+                break;
+            case 4:
+                price = 14.00f;
+                break;
+            case 5:
+                price = 5.00f;
+                break;
+            case 6:
+                price = 4.00f;
+                break;
+            default:
+                printf("Invalid choice. Please enter a number from 0 to 6.\n");
+                break;
+        }
+
+        if (price > 0.0f) {
+            printf("Quantity for item %d (%d-%d): ",
+                   choice, MIN_QTY, MAX_QTY);
+            scanf("%d", &qty);
+
+            if (qty < MIN_QTY || qty > MAX_QTY) {
+                printf("Invalid quantity. Please enter %d to %d.\n",
+                       MIN_QTY, MAX_QTY);
+            }
+            else {
+                subtotal = subtotal + price * qty;
+                items_ordered++;
+
+                printf("Added %d x item %d. Subtotal so far: ", qty, choice);
+                print_money(subtotal);
+            }
+        }
+    } while (choice != 0);
+
+    if (items_ordered == 0) {
+        printf("\nNo items ordered. Goodbye!\n");
+        return 0;
+    }
+
+    /* R4: 10% off if subtotal is AED 60 or more */
+    if (subtotal >= DISCOUNT_THRESHOLD) {
+        discount = subtotal * DISCOUNT_RATE;
+    }
+
+    discounted = subtotal - discount;
+    vat = discounted * VAT_RATE;
+    total = discounted + vat;
+
+    printf("\n");
+    print_line();
+    printf("            RECEIPT\n");
+    print_line();
+
+    printf("Subtotal:          ");
+    print_money(subtotal);
+
+    if (discount > 0.0f) {
+        printf("Discount (10 percent):    ");
+        print_money(discount);
+
+        printf("After discount:    ");
+        print_money(discounted);
+    }
+
+    printf("VAT (5 percent):          ");
+    print_money(vat);
+
+    printf("TOTAL:             ");
+    print_money(total);
+
+    print_line();
+    printf("Thank you for choosing QuickBite Kitchen!\n");
+
+    return 0;
+}</div>
+
+<script>
+function copyFullCode() {
+  var codeEl = document.getElementById('fullCode');
+  var btn = document.getElementById('copyBtn');
+  var text = codeEl.innerText;
+
+  function showCopied() {
+    btn.textContent = 'Copied! Now paste it into onlinegdb.com';
+    setTimeout(function () {
+      btn.textContent = 'Copy Code';
+    }, 2500);
+  }
+
+  function showFailed() {
+    btn.textContent = 'Could not copy, select the code manually';
+    setTimeout(function () {
+      btn.textContent = 'Copy Code';
+    }, 2500);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(showCopied, showFailed);
+  } else {
+    try {
+      var temp = document.createElement('textarea');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showCopied();
+    } catch (err) {
+      showFailed();
+    }
+  }
+}
+</script>
+</body>
+</html>
