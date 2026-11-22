@@ -34,36 +34,52 @@
     padding: 20px;
     padding-top: calc(20px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    overflow-x: hidden;
   }
   h1 {
     text-align: center;
     font-size: 1.8em;
   }
+
+  /* ---- copy button area ---- */
   .copy-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin: 40px 0 10px 0;
+  }
+  .copy-area {
     position: relative;
+    flex: 0 0 auto;
+    width: 260px;
+    height: 260px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px 0 10px 0;
-    height: 160px;
   }
   .red-circle {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 230px;
+    height: 230px;
     border: 8px solid red;
     border-radius: 50%;
   }
   .arrow {
     position: absolute;
-    font-size: 40px;
+    font-size: 26px;
+    line-height: 1;
     color: red;
     font-weight: bold;
+    z-index: 1;
   }
-  .arrow-top { top: -10px; }
-  .arrow-bottom { bottom: -10px; transform: rotate(180deg); }
-  .arrow-left { left: 0; transform: rotate(90deg); }
-  .arrow-right { right: 0; transform: rotate(-90deg); }
+  .arrow-top    { top: 26px;    left: 50%;  transform: translateX(-50%); }
+  .arrow-bottom { bottom: 26px; left: 50%;  transform: translateX(-50%) rotate(180deg); }
+
   .copy-btn {
     position: relative;
     z-index: 2;
@@ -74,7 +90,21 @@
     font-size: 1.1em;
     border-radius: 8px;
     cursor: pointer;
+    max-width: 180px;
   }
+
+  .mascot {
+    display: block;
+    height: 250px;
+    width: auto;
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 520px) {
+    .mascot { height: 170px; }
+  }
+
   .paste-note {
     text-align: center;
     font-size: 0.9em;
@@ -114,11 +144,15 @@
 
 <h1>Big button to copy code</h1>
 <div class="copy-wrap">
-  <div class="red-circle"></div>
-  <span class="arrow arrow-top">&#8595;</span>
-  <span class="arrow arrow-bottom">&#8595;</span>
-  <button class="copy-btn" id="copyBtn" onclick="copyFullCode()">Copy Code</button>
-  <img src="meimei.webp" alt="meimei" style="height: 250px; position: absolute; left: calc(50% + 200px); top: 50%; transform: translateY(-50%);">
+  <div class="copy-area">
+    <div class="red-circle"></div>
+    <span class="arrow arrow-top">&#8595;</span>
+    <span class="arrow arrow-bottom">&#8595;</span>
+    <span class="arrow arrow-left">&#8595;</span>
+    <span class="arrow arrow-right">&#8595;</span>
+    <button class="copy-btn" id="copyBtn" onclick="copyFullCode()">Copy Code</button>
+  </div>
+  <img class="mascot" src="meimei.webp" alt="meimei">
 </div>
 <p class="paste-note">Paste this into your compiler at onlinegdb.com</p>
 
@@ -190,6 +224,21 @@ void show_menu(void);
 
     printf("  1. Chicken Shawarma    ");
     print_money(18.00f);
+
+    printf("  2. Beef Burger         ");
+    print_money(22.00f);
+
+    printf("  3. Falafel Wrap        ");
+    print_money(12.00f);
+
+    printf("  4. Loaded Fries        ");
+    print_money(14.00f);
+
+    printf("  5. Karak Tea           ");
+    print_money(5.00f);
+
+    printf("  6. Soft Drink          ");
+    print_money(4.00f);
 
     printf("  0. Finish order\n");
     print_line();
